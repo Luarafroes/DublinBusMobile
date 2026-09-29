@@ -9,6 +9,7 @@ import com.example.dublinbusmobile.Data.Bus
 import com.example.dublinbusmobile.Data.RepositoryProvider
 import kotlinx.coroutines.launch
 
+
 class StopDetailViewModel : ViewModel() {
     var buses by mutableStateOf<List<Bus>>(emptyList())
         private set

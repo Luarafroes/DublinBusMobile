@@ -13,11 +13,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
+import com.example.dublinbusmobile.BuildConfig
 
 @Composable
 fun MapScreen(
     navController: NavController
 ) {
+    // Get CARTO API key from BuildConfig
+    val cartoApiKey = BuildConfig.CARTO_API_KEY
+
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -96,7 +100,7 @@ fun MapScreen(
                                 );
 
                                 L.tileLayer(
-                                    'https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png?key=YOUR_KEY_HERE',
+                                    'https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png?key=$cartoApiKey',
                                     {
                                         attribution:
                                             '&copy; OpenStreetMap contributors &copy; CARTO',

@@ -1,9 +1,10 @@
-
 package com.example.dublinbusmobile.ui
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,41 +22,52 @@ fun StopListScreen(
     viewModel: StopListViewModel = viewModel()
 ) {
     Column(
-        modifier = modifier.fillMaxSize()
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16.dp)
     ) {
 
-        // Back to Home button
-        TextButton(
-            onClick = {
-                navController.popBackStack()
-            },
-            modifier = Modifier.padding(start = 8.dp)
+        // Back button and title
+        Row(
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("← Home")
+
+            IconButton(
+                onClick = {
+                    navController.popBackStack()
+                }
+            ) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "Go back"
+                )
+            }
+
+            Text(
+                text = "Bus Stops",
+                style = MaterialTheme.typography.headlineSmall
+            )
         }
 
-        Text(
-            text = "Bus Stops",
-            style = MaterialTheme.typography.headlineSmall,
-            modifier = Modifier.padding(horizontal = 16.dp)
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
         if (viewModel.isLoading) {
+
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
                 CircularProgressIndicator()
             }
+
         } else {
+
             LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp)
+                modifier = Modifier.fillMaxSize()
             ) {
+
                 items(viewModel.stops) { stop ->
+
                     Card(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -64,18 +76,42 @@ fun StopListScreen(
                             onStopClick(stop)
                         }
                     ) {
-                        Column(
-                            modifier = Modifier.padding(16.dp)
-                        ) {
-                            Text(
-                                text = stop.name,
-                                style = MaterialTheme.typography.titleMedium
-                            )
 
-                            Text(
-                                text = "Stop ${stop.id}",
-                                style = MaterialTheme.typography.bodySmall
-                            )
+                        Row(
+                            modifier = Modifier.padding(16.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+
+                            // Stop number
+                            Surface(
+                                color = MaterialTheme.colorScheme.primary,
+                                shape = MaterialTheme.shapes.small
+                            ) {
+                                Text(
+                                    text = stop.id,
+                                    color = MaterialTheme.colorScheme.onPrimary,
+                                    modifier = Modifier.padding(
+                                        horizontal = 12.dp,
+                                        vertical = 8.dp
+                                    ),
+                                    style = MaterialTheme.typography.titleMedium
+                                )
+                            }
+
+                            Spacer(modifier = Modifier.width(12.dp))
+
+                            // Stop name
+                            Column {
+                                Text(
+                                    text = stop.name,
+                                    style = MaterialTheme.typography.titleMedium
+                                )
+
+                                Text(
+                                    text = "Bus Stop",
+                                    style = MaterialTheme.typography.bodySmall
+                                )
+                            }
                         }
                     }
                 }
